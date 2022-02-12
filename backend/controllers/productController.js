@@ -7,6 +7,9 @@ const APIFeatures = require("../utils/apiFeatures");
 //create new product => /api/v1/product/new
 
 exports.newProduct = catchAsyncErrors(async(req,res, next)=>{
+
+        req.body.user=req.user.id;   
+
         const product = await Product.create(req.body);
         res.status(201).json({
             success:true,
@@ -17,7 +20,6 @@ exports.newProduct = catchAsyncErrors(async(req,res, next)=>{
 //Get all products => /api/v1/products? keyword=apple
 
 exports.getProducts =  catchAsyncErrors(async(req,res,next)=>{
-
     const resPerPage = 4;
     const productCount = await Product.countDocuments();
     const apiFeatures = new APIFeatures(Product.find(), req.query)
@@ -26,7 +28,6 @@ exports.getProducts =  catchAsyncErrors(async(req,res,next)=>{
                                              .pagination(resPerPage)
 
     const products = await apiFeatures.query; 
-
     res.status(200).json({
         success:true,
         count:products.length,

@@ -9,13 +9,16 @@ const cookieParser = require('cookie-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(express.json());
-app.use(cookieParser);
+app.use(cookieParser());
 
-//import all routes
+// //import all routes
 app.use('/api/v1', products);      //now it makes /api/v1/product
 app.use('/api/v1', auth);
 //middleware to handle error s
 app.use(errorMiddleware);
+
+app.get("/",async(req, res)=>{
+    res.send("shopit");
+})
  
-``
 module.exports = app;
