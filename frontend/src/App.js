@@ -1,11 +1,24 @@
+import { useEffect } from 'react';
+
 import { BrowserRouter as Router,Route } from 'react-router-dom';
 
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
 import Home from "./components/Home";
 import ProductDetails from "./components/product/ProductDetails";
-import Login from './components/user/Login'
+import Login from './components/user/Login';
+
+import {loadUser} from './actions/userActions';
+import store from './store';
+
+import Register from './components/user/Register';
+import Profile from './components/user/Profile';
 function App() {
+
+  useEffect(()=>{
+    store.dispatch(loadUser())
+  },[])
+
   return (
       <Router>
         <div className="App">
@@ -15,6 +28,9 @@ function App() {
             <Route  path = '/search/:keyword' component={Home} />
             <Route exact path = '/product/:id' component={ProductDetails} />
             <Route path='/login' component={Login} />
+            <Route path='/register' component={Register} />
+            <Route path='/me' component={Profile} exact />
+
           </div>
           <Footer/>
         </div>

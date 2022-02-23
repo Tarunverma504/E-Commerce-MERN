@@ -4,11 +4,19 @@ const catchAsyncError = require('../middlewares/catchAsyncErrors');
 const User = require('../models/user');
 const sendToken = require('../utils/jwtToken');
 const sendEmail = require('../utils/sendEmail');
-const crypto = require('crypto')
+const crypto = require('crypto');
+const cloudinary = require('cloudinary');
 
 
 //Register a user => /api/v1/register
 exports.registerUser = catchAsyncError(async(req,res,next)=>{
+    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        folder: 'avtar-Ecommerce',
+        width: 150,
+        crop: "scale"
+    })
+
+
     const {name, email, password} = req.body;
 
     const user = await User.create({
@@ -16,8 +24,8 @@ exports.registerUser = catchAsyncError(async(req,res,next)=>{
         email,
         password,
         avatar:{
-            public_id:'avtar-Ecommerce/pngwing.com_mzxlzu.png',
-            url:'https://res.cloudinary.com/vermatarun/image/upload/v1644578440/avtar-Ecommerce/pngwing.com_mzxlzu.png'
+            public_id:result.public_id,
+            url:result.secure_url
         }
     })
 
