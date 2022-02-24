@@ -26,11 +26,11 @@ const Profile = ()=>{
                             <h4>Full Name</h4>
                             <p>{user.name}</p>
                 
-                            <h4>{user.email}</h4>
-                            <p>ghulamabbas258@gmail.com</p>
+                            <h4>Email</h4>
+                            <p>{user.email}</p>
 
-                            <h4>Joined On</h4>
-                            <p>{String(user.createdAt).substring(0,10)}</p>
+                            {/* <h4>Joined On</h4>
+                            <p>{String(user.createAt).substring(0, 10)}</p> */}
 
                             {user.role !== 'admin' && (
                                 <Link to="/order/me" className="btn btn-danger btn-block mt-5">
