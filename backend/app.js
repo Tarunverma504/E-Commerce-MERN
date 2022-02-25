@@ -7,12 +7,14 @@ const cloudinary = require('cloudinary');
 const products = require('./routes/product');
 const auth = require('./routes/auth');
 const order = require('./routes/order');
+const payment = require('./routes/payment');
+
 const fileUpload = require('express-fileupload');
 
 const errorMiddleware = require('./middlewares/errors');
 
-require('dotenv').config({ path: './config/config.env' });
-
+const dotenv = require('dotenv');
+dotenv.config({path:'./config/config.env'})
 // if (process.env.NODE_ENV !== 'PRODUCTION') require('dotenv').config({ path: 'backend/config/config.env' })
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -34,6 +36,7 @@ cloudinary.config({
 app.use('/api/v1', products);      //now it makes /api/v1/product
 app.use('/api/v1', auth);
 app.use('/api/v1', order);
+app.use('/api/v1',payment);
 
 //middleware to handle error s
 app.use(errorMiddleware);
