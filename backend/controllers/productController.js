@@ -157,45 +157,12 @@ exports.updateProduct = catchAsyncErrors(async(req,res, next)=>{
         product
     })
     
-    // try{
-    //     let product = await Product.findById(req.params.id);
-    //     product = await Product.findByIdAndUpdate(req.params.id, req.body,{
-    //         new:true,
-    //         runValidators:true,
-    //         useFindAndModify: false
-    //     });
-    //     res.status(200).json({
-    //         success:true,
-    //         product
-    //     })
-
-    // }
-    // catch(err){
-    //     return res.status(404).json({
-    //         success:false,
-    //         message:"Product not found"
-    //     })
-    // }
-})
+    })
 
 // Delete  Product => /api/v1/admin/product/:id
 
 exports.deleteProduct = catchAsyncErrors(async(req, res, next)=>{
-    // try{
-    //     let product = await Product.findById(req.params.id);
-    //     await product.remove();
-    //     res.status(200).json({
-    //         success: true,
-    //         message: "Product is deleted."
-    //     })
-    // }
-    // catch(err){
-    //     return res.status(404).json({
-    //         success:false,
-    //         message:"Product not found"
-    //     })
-    // }
-
+   
     const product = await Product.findById(req.params.id);
 
     if (!product) {

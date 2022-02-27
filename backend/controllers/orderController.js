@@ -78,7 +78,6 @@ exports.allOrders = catchAsyncErrors(async(req, res,next)=>{
 
 //update/process order - ADMIN => /api/v1/admin/order/:id
 exports.updateOrder = catchAsyncErrors(async(req, res,next)=>{
-    console.log("ds  dsf d ");
     const order= await Order.findById(req.params.id);
 
     if(order.orderStatus === 'Delivered'){
