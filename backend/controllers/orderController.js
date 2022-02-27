@@ -8,7 +8,7 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 
 exports.newOrder = catchAsyncErrors(async(req, res, next)=>{
     const {
-        orderItems,
+        orderItem,
         shippingInfo,
         itemsPrice,
         taxPrice,
@@ -17,8 +17,9 @@ exports.newOrder = catchAsyncErrors(async(req, res, next)=>{
         paymentInfo
     } = req.body
 
+
     const order = await Order.create({
-        orderItems,
+        orderItem,
         shippingInfo,
         itemsPrice,
         taxPrice,
@@ -29,7 +30,7 @@ exports.newOrder = catchAsyncErrors(async(req, res, next)=>{
         user:req.user._id 
     })
 
-    res.send(200).json({
+    res.status(200).json({
         success:true,
         order
     })
@@ -62,28 +63,29 @@ exports.myOrders = catchAsyncErrors(async(req, res,next)=>{
 
 //Get all orders => /api/v1/admin/order
 exports.allOrders = catchAsyncErrors(async(req, res,next)=>{
-    const order= await Order.find();
+    const orders= await Order.find();
 
     let totalAmount = 0;
-    order.forEach(order=>{
+    orders.forEach(order=>{
         totalAmount += order.totalPrice
     })
     res.status(200).json({
         success:true,
         totalAmount,
-        order
+        orders
     })
 })
 
 //update/process order - ADMIN => /api/v1/admin/order/:id
 exports.updateOrder = catchAsyncErrors(async(req, res,next)=>{
+    console.log("ds  dsf d ");
     const order= await Order.findById(req.params.id);
 
     if(order.orderStatus === 'Delivered'){
         return next(new ErrorHandler('Your have already delivered this order', 400))
     }
 
-    order.orderItems.forEach(async item =>{
+    order.orderItem.forEach(async item =>{
         await updateStock(item.product, item.quantity)
     })
 
@@ -115,6 +117,6 @@ exports.deleteOrder = catchAsyncErrors(async(req, res,next)=>{
     await order.remove();
     res.status(200).json({
         success:true,
-        order
     })
 })
+
