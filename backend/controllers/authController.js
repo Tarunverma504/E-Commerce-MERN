@@ -108,7 +108,6 @@ exports.forgotPassword = catchAsyncError(async(req, res, next)=>{
 //Reset password => /api/v1/password/reset/:token
 exports.resetPassword = catchAsyncError(async(req, res, next)=>{
     //Hash URL token 
-    // cosnole.log("ss  x");
     const resetPasswordToken = crypto.createHash('sha256').update(req.params.token.trim()).digest('hex')
     const user = await User.findOne({
         resetPasswordToken,
@@ -208,10 +207,10 @@ exports.updateProfile = catchAsyncError(async(req, res,next)=>{
 
 //Logout user => /api/v1/logout
 exports.logout = catchAsyncError(async(req,res,next)=>{
-    res.cookie('token',null,{
-        expires: new Date(Date.now()),
-        httpOnly:true
-    })
+    // res.cookie('token',null,{
+    //     expires: new Date(Date.now()),
+    //     httpOnly:true
+    // })
 
     res.status(200).json({
         success:true,

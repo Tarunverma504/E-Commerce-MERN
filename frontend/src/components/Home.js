@@ -63,7 +63,6 @@ const Home = ({ match }) => {
         count = filteredProductsCount
     }
     
-    console.log(products);
     return (
         <Fragment>
             {loading ? <Loader /> : (

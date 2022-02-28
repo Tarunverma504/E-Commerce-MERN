@@ -58,8 +58,15 @@ function App() {
     store.dispatch(loadUser())
 
     async function getStripApiKey() {
-      const { data } = await axios.get('/api/v1/stripeapi');
+      const Token= localStorage.getItem("Token");
 
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'authorization':`Bearer ${Token}`
+            }
+        }
+      const { data } = await axios.get(`${process.env.REACT_APP_PORT}/api/v1/stripeapi`,config);
       setStripeApiKey(data.stripeApiKey)
     }
 

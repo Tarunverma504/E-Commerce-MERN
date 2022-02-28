@@ -68,17 +68,20 @@ const Payment = ({ history }) => {
         let res;
         try {
 
+            const Token= localStorage.getItem("Token");
+
             const config = {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'authorization':`Bearer ${Token}`
+
                 }
             }
 
-            res = await axios.post('/api/v1/payment/process', paymentData, config)
+            res = await axios.post(`${process.env.REACT_APP_PORT}/api/v1/payment/process`, paymentData, config)
 
             const clientSecret = res.data.client_secret;
 
-            console.log(clientSecret);
 
             if (!stripe || !elements) {
                 return;

@@ -34,13 +34,22 @@ export const getProducts = (keyword = '', currentPage = 1, price, category, rati
     try{
         dispatch({  type:ALL_PRODUCTS_REQUEST })
 
-        let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&ratings[gte]=${rating}`;
+        let link = `${process.env.REACT_APP_PORT}/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&ratings[gte]=${rating}`;
 
         if(category){
-            link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}&ratings[gte]=${rating}`
+            link = `${process.env.REACT_APP_PORT}/api/v1/products?keyword=${keyword}&page=${currentPage}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}&ratings[gte]=${rating}`
         }
 
-        const {data} = await axios.get(link)
+        const Token= localStorage.getItem("Token");
+
+        const config = {
+            headers:{
+                'Content-Type':'application/json',
+                'authorization':`Bearer ${Token}`
+            }
+        }
+
+        const {data} = await axios.get(link, config)
 
         dispatch({
             type: ALL_PRODUCTS_SUCCESS,
@@ -60,13 +69,16 @@ export const getProducts = (keyword = '', currentPage = 1, price, category, rati
 export const newProduct = (productData) => async(dispatch)=>{
     try{
         dispatch({  type: NEW_PRODUCT_REQUEST })
+        const Token= localStorage.getItem("Token");
 
         const config = {
             headers:{
-                'Context-Type':'application/json'
+                'Context-Type':'application/json',
+                'authorization':`Bearer ${Token}`
+
             }
         }
-        const {data} = await axios.post(`/api/v1/admin/product/new`, productData, config)
+        const {data} = await axios.post(`${process.env.REACT_APP_PORT}/api/v1/admin/product/new`, productData, config)
 
         dispatch({
             type: NEW_PRODUCT_SUCCESS,
@@ -90,7 +102,7 @@ export const deleteProduct = (id) => async(dispatch)=>{
         dispatch({  type: DELETE_PRODUCT_REQUEST})
 
         
-        const {data} = await axios.delete(`/api/v1/admin/product/${id}`);
+        const {data} = await axios.delete(`${process.env.REACT_APP_PORT}/api/v1/admin/product/${id}`);
 
         dispatch({
             type: NEW_REVIEW_SUCCESS,
@@ -116,7 +128,7 @@ export const updateProduct = (id, productData) => async(dispatch)=>{
                 'Context-Type':'application/json'
             }
         }
-        const {data} = await axios.put(`/api/v1/admin/product/${id}`, productData, config)
+        const {data} = await axios.put(`${process.env.REACT_APP_PORT}/api/v1/admin/product/${id}`, productData, config)
 
         dispatch({
             type: UPDATE_PRODUCT_SUCCESS,
@@ -136,7 +148,15 @@ export const updateProduct = (id, productData) => async(dispatch)=>{
 export const getProductDetails = (id) => async(dispatch)=>{
     try{
         dispatch({  type: PRODUCT_DETAILS_REQUEST })
-        const {data} = await axios.get(`/api/v1/product/${id}`)
+        const Token= localStorage.getItem("Token");
+
+        const config = {
+            headers:{
+                'Content-Type':'application/json',
+                'authorization':`Bearer ${Token}`
+            }
+        }
+        const {data} = await axios.get(`${process.env.REACT_APP_PORT}/api/v1/product/${id}`,config)
 
         dispatch({
             type: PRODUCT_DETAILS_SUCCESS,
@@ -164,7 +184,7 @@ export const newReview = (reviewData) => async(dispatch)=>{
                 'Context-Type':'application/json'
             }
         }
-        const {data} = await axios.put(`/api/v1/review`, reviewData, config)
+        const {data} = await axios.put(`${process.env.REACT_APP_PORT}/api/v1/review`, reviewData, config)
 
         dispatch({
             type: NEW_REVIEW_SUCCESS,
@@ -184,7 +204,16 @@ export const newReview = (reviewData) => async(dispatch)=>{
 export const getAdminProducts = () => async(dispatch)=>{
     try{
         dispatch({  type: ADMIN_PRODUCTS_REQUEST })
-        const {data} = await axios.get(`/api/v1/admin/products`)
+
+        const Token= localStorage.getItem("Token");
+
+        const config = {
+            headers:{
+                'Content-Type':'application/json',
+                'authorization':`Bearer ${Token}`
+            }
+        }
+        const {data} = await axios.get(`${process.env.REACT_APP_PORT}/api/v1/admin/products`, config)
 
         dispatch({
             type: ADMIN_PRODUCTS_SUCCESS,
@@ -205,8 +234,16 @@ export const getProductReviews = (id) => async (dispatch) => {
     try {
 
         dispatch({ type: GET_REVIEWS_REQUEST })
+        const Token= localStorage.getItem("Token");
 
-        const { data } = await axios.get(`/api/v1/reviews?id=${id}`)
+        const config = {
+            headers:{
+                'Content-Type':'application/json',
+                'authorization':`Bearer ${Token}`
+            }
+        }
+
+        const { data } = await axios.get(`${process.env.REACT_APP_PORT}/api/v1/reviews?id=${id}`,config)
 
         dispatch({
             type: GET_REVIEWS_SUCCESS,
@@ -228,7 +265,7 @@ export const deleteReview = (id, productId) => async (dispatch) => {
 
         dispatch({ type: DELETE_REVIEW_REQUEST })
 
-        const { data } = await axios.delete(`/api/v1/reviews?id=${id}&productId=${productId}`)
+        const { data } = await axios.delete(`${process.env.REACT_APP_PORT}/api/v1/reviews?id=${id}&productId=${productId}`)
 
         dispatch({
             type: DELETE_REVIEW_SUCCESS,

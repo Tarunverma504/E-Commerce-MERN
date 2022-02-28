@@ -27,14 +27,16 @@ export const createOrder = (order) => async(dispatch, getState) =>{
         dispatch({
             type: CREATE_ORDER_REQUEST
         })
+        const Token= localStorage.getItem("Token");
 
         const config = {
             headers:{
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'authorization':`Bearer ${Token}`
             }
         }
 
-        const { data } = await axios.post('/api/v1/order/new', order, config)
+        const { data } = await axios.post(`${process.env.REACT_APP_PORT}/api/v1/order/new`, order, config)
         dispatch({
             type: CREATE_ORDER_SUCCESS,
             payload:data 
@@ -54,8 +56,15 @@ export const createOrder = (order) => async(dispatch, getState) =>{
 export const myOrders = () =>async(dispatch)=>{
     try{
         dispatch({type: MY_ORDERS_REQUEST});
+        const Token= localStorage.getItem("Token");
 
-        const { data } = await axios.get('/api/v1/orders/me');
+        const config = {
+            headers:{
+                'Content-Type':'application/json',
+                'authorization':`Bearer ${Token}`
+            }
+        }
+        const { data } = await axios.get(`${process.env.REACT_APP_PORT}/api/v1/orders/me`,config);
         dispatch({
              type: MY_ORDERS_SUCCESS,
             payload: data.order
@@ -75,8 +84,15 @@ export const myOrders = () =>async(dispatch)=>{
 export const getOrderDetails = (id) =>async(dispatch)=>{
     try{
         dispatch({type: MY_ORDERS_REQUEST});
+        const Token= localStorage.getItem("Token");
 
-        const { data } = await axios.get(`/api/v1/order/${id}`);
+        const config = {
+            headers:{
+                'Content-Type':'application/json',
+                'authorization':`Bearer ${Token}`
+            }
+        }
+        const { data } = await axios.get(`${process.env.REACT_APP_PORT}/api/v1/order/${id}`,config);
         dispatch({
              type: ORDER_DETAILS_SUCCESS,
             payload: data.order
@@ -97,8 +113,15 @@ export const getOrderDetails = (id) =>async(dispatch)=>{
 export const allOrders = () =>async(dispatch)=>{
     try{
         dispatch({type: ALL_ORDERS_REQUEST});
+        const Token= localStorage.getItem("Token");
 
-        const { data } = await axios.get(`/api/v1/admin/orders`);
+        const config = {
+            headers:{
+                'Content-Type':'application/json',
+                'authorization':`Bearer ${Token}`
+            }
+        }
+        const { data } = await axios.get(`${process.env.REACT_APP_PORT}/api/v1/admin/orders`,config);
         dispatch({
              type: ALL_ORDERS_SUCCESS,
             payload: data
@@ -119,7 +142,7 @@ export const deleteOrder = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_ORDER_REQUEST })
 
-        const { data } = await axios.delete(`/api/v1/admin/order/${id}`)
+        const { data } = await axios.delete(`${process.env.REACT_APP_PORT}/api/v1/admin/order/${id}`)
 
         dispatch({
             type: DELETE_ORDER_SUCCESS,
@@ -146,7 +169,7 @@ export const updateOrder = (id, orderData) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.put(`/api/v1/admin/order/${id}`, orderData, config)
+        const { data } = await axios.put(`${process.env.REACT_APP_PORT}/api/v1/admin/order/${id}`, orderData, config)
 
         dispatch({
             type: UPDATE_ORDER_SUCCESS,

@@ -1,11 +1,10 @@
 const catchAsyncError = require('../middlewares/catchAsyncErrors');
-const dotenv = require('dotenv');
-dotenv.config({path:'./config/config.env'});
+// const dotenv = require('dotenv');
+require('dotenv').config()
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 
 //Process stripe payments => /api/v1/payment/process
-
 exports.processPayment = catchAsyncError(async(req, res, next) => {
     const paymentIntent = await stripe.paymentIntents.create({
         amount: req.body.amount,

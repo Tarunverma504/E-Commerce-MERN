@@ -1,4 +1,6 @@
 //create and send token and save in the cookie
+require('dotenv').config()
+
 
 const sendToken = (user, statusCode, res)=>{
 

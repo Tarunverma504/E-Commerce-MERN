@@ -2,7 +2,16 @@ import axios from 'axios';
 import { ADD_TO_CART, REMOVE_ITEM_CART, SAVE_SHIPPING_INFO } from '../constants/cartConstants';
 
 export const addItemToCart = (id, quantity)=>async (dispatch, getState)=>{
-    const { data } = await axios.get(`/api/v1/product/${id}`)
+
+    const Token= localStorage.getItem("Token");
+
+        const config = {
+            headers:{
+                'Content-Type': 'application/json',
+                'authorization':`Bearer ${Token}`
+            }
+        }
+    const { data } = await axios.get(`${process.env.REACT_APP_PORT}/api/v1/product/${id}`,config)
 
     dispatch({
         type: ADD_TO_CART,

@@ -1,5 +1,6 @@
 
 const ErrorHandler = require('../utils/errorHandler');
+require('dotenv').config()
 
 
 module.exports = (err, req, res, next) => {
@@ -10,7 +11,7 @@ module.exports = (err, req, res, next) => {
             success: false,
             error: err,
             errMessage: err.message,
-            // stack: err.stack
+            stack: err.stack
         })
     // }
 
