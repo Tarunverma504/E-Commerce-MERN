@@ -19,7 +19,6 @@ exports.newProduct = catchAsyncErrors(async(req,res, next)=>{
         }
 
         let imagesLinks = [];
-
         for(let i=0; i< images.length; i++){
             const result = await cloudinary.v2.uploader.upload(images[i],{
                 folder: 'products'
@@ -162,7 +161,6 @@ exports.updateProduct = catchAsyncErrors(async(req,res, next)=>{
 // Delete  Product => /api/v1/admin/product/:id
 
 exports.deleteProduct = catchAsyncErrors(async(req, res, next)=>{
-   
     const product = await Product.findById(req.params.id);
 
     if (!product) {
@@ -174,7 +172,8 @@ exports.deleteProduct = catchAsyncErrors(async(req, res, next)=>{
         const result = await cloudinary.v2.uploader.destroy(product.images[i].public_id)
     }
 
-    await product.remove();
+    const abc = await product.remove();
+    console.log(abc);
 
     res.status(200).json({
         success: true,

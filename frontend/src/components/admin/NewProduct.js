@@ -1,14 +1,14 @@
-// import React, { Fragment, useEffect, useState } from 'react'
+// import React, { Fragment, useState, useEffect } from 'react'
 
-// import MetaData from '../layouts/MetaData'
+// import MetaData from '../layout/MetaData'
 // import Sidebar from './Sidebar'
 
 // import { useAlert } from 'react-alert'
 // import { useDispatch, useSelector } from 'react-redux'
-// import {newProduct, clearErrors} from '../../actions/productActions'
+// import { newProduct, clearErrors } from '../../actions/productActions'
+// import { NEW_PRODUCT_RESET } from '../../constants/productConstants'
 
-// import { NEW_PRODUCT_RESET  } from '../../constants/productConstants'
-// const NewProduct = ({history}) =>{
+// const NewProduct = ({ history }) => {
 
 //     const [name, setName] = useState('');
 //     const [price, setPrice] = useState(0);
@@ -17,28 +17,27 @@
 //     const [stock, setStock] = useState(0);
 //     const [seller, setSeller] = useState('');
 //     const [images, setImages] = useState([]);
-//     const [imagesPreview, setImagesPreview] = useState([]);
-
+//     const [imagesPreview, setImagesPreview] = useState([])
 
 //     const categories = [
 //         'Electronics',
-//         'Cameras',
-//         'Laptop',
-//         'Accessories',
-//         'Headphones',
-//         'Food',
-//         'Books',
-//         'Clothes/Shoes',
-//         'Beauty/Health',
-//         'Sports',
-//         'Outdoor',
-//         'Home'
+//                 'Cameras',
+//                 'Laptop',
+//                 'Accessories',
+//                 'Headphones',
+//                 'Food',
+//                 'Books',
+//                 'Clothes/Shoes',
+//                 'Beauty/Health',
+//                 'Sports',
+//                 'Outdoor',
+//                 'Home'
 //     ]
 
 //     const alert = useAlert();
 //     const dispatch = useDispatch();
 
-//     const { loading, error,success } = useSelector(state => state.newProduct);
+//     const { loading, error, success } = useSelector(state => state.newProduct);
 
 //     useEffect(() => {
 
@@ -47,178 +46,191 @@
 //             dispatch(clearErrors())
 //         }
 
-//         if(success){
+//         if (success) {
 //             history.push('/admin/products');
-//             alert.success('Product created sucessfully');
-//             dispatch({ type:NEW_PRODUCT_RESET })
+//             alert.success('Product created successfully');
+//             dispatch({ type: NEW_PRODUCT_RESET })
 //         }
+
 //     }, [dispatch, alert, error, success, history])
 
-//     const submitHandler = (e)=>{
+//     const submitHandler = (e) => {
 //         e.preventDefault();
 
 //         const formData = new FormData();
-//         formData.set('name',name);
-//         formData.set('price',price);
-//         formData.set('description',description);
-//         formData.set('category',category);
-//         formData.set('stock',stock);
-//         formData.set('seller',seller);
+//         formData.set('name', name);
+//         formData.set('price', price);
+//         formData.set('description', description);
+//         formData.set('category', category);
+//         formData.set('stock', stock);
+//         formData.set('seller', seller);
 
 //         images.forEach(image => {
-//             formData.append('images',image);
+//             formData.append('images', image)
 //         })
 
-//         dispatch(newProduct(formData));
+//         dispatch(newProduct(formData))
 //     }
 
-//     const onChange = e =>{
+//     const onChange = e => {
 
-//             const files = Array.from(e.target.files)
-//             setImagesPreview([]);
-//             setImages([])
+//         const files = Array.from(e.target.files)
 
-//             files.forEach (file => {
-//                 const reader = new FileReader();
-//                 reader.onload = () =>{
-//                     if(reader.readyState === 2){
-//                         setImagesPreview(oldArray => [...oldArray, reader.result]);
-//                         setImages(oldArray => [...oldArray, reader.result]);
-//                     }
+//         setImagesPreview([]);
+//         setImages([])
+
+//         files.forEach(file => {
+//             const reader = new FileReader();
+
+//             reader.onload = () => {
+//                 if (reader.readyState === 2) {
+//                     setImagesPreview(oldArray => [...oldArray, reader.result])
+//                     setImages(oldArray => [...oldArray, reader.result])
 //                 }
-//                 reader.readAsDataURL(file) ;
-//             })
+//             }
+
+//             reader.readAsDataURL(file)
+//         })
 //     }
 
-//     return(
+
+//     console.log(name);
+//     console.log(price);
+//     console.log(category);
+//     console.log(stock);
+//     console.log(seller);
+    
+
+//     return (
 //         <Fragment>
-//             <MetaData title={'New Products'} />
+//             <MetaData title={'New Product'} />
+//             <div className="row">
+//                 <div className="col-12 col-md-2">
+//                     <Sidebar />
+//                 </div>
 
-//             <div className='row'>
-//                 <div className='col-12 col-md-2'>
-//                     <Sidebar/>
-//                  </div>
+//                 <div className="col-12 col-md-10">
+//                     <Fragment>
+//                         <div className="wrapper my-5">
+//                             <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
+//                                 <h1 className="mb-4">New Product</h1>
 
-//                     <div className='col-12 col-md-10'>
-//                         <Fragment>
-//                         <div className="wrapper my-5"> 
-//                                 <form className="shadow-lg" encType='multipart/form-data' onSubmit={submitHandler}>
-//                                     <h1 className="mb-4">New Product</h1>
-
-//                                     <div className="form-group">
+//                                 <div className="form-group">
 //                                     <label htmlFor="name_field">Name</label>
 //                                     <input
 //                                         type="text"
 //                                         id="name_field"
 //                                         className="form-control"
 //                                         value={name}
-//                                         onChange={(e)=>setName(e.target.value)}
+//                                         onChange={(e) => setName(e.target.value)}
 //                                     />
-//                                     </div>
+//                                 </div>
 
-//                                     <div className="form-group">
-//                                         <label htmlFor="price_field">Price</label>
-//                                         <input
+//                                 <div className="form-group">
+//                                     <label htmlFor="price_field">Price</label>
+//                                     <input
 //                                         type="text"
 //                                         id="price_field"
 //                                         className="form-control"
 //                                         value={price}
-//                                         onChange={(e)=>setPrice(e.target.value)}
-//                                         />
-//                                     </div>
+//                                         onChange={(e) => setPrice(e.target.value)}
+//                                     />
+//                                 </div>
 
-//                                     <div className="form-group">
-//                                         <label htmlFor="description_field">Description</label>
-//                                         <textarea className="form-control" id="description_field" rows="8" value={description} onChange={(e)=>setDescription(e.target.value)} ></textarea>
-//                                     </div>
+//                                 <div className="form-group">
+//                                     <label htmlFor="description_field">Description</label>
+//                                     <textarea className="form-control" id="description_field" rows="8" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+//                                 </div>
 
-//                                     <div className="form-group">
-//                                         <label htmlFor="category_field">Category</label>
-//                                         <select className="form-control" id="category_field" value={category} onChange={(e)=>setCategory(e.target.value)}>
-//                                             {categories.map(category=>(
-//                                                 <option key={category} value={category}>{category}</option>
-//                                             ))}
-                                            
-                                            
-//                                         </select>
-//                                     </div>
-//                                     <div className="form-group">
-//                                         <label htmlFor="stock_field">Stock</label>
-//                                         <input
+//                                 <div className="form-group">
+//                                     <label htmlFor="category_field">Category</label>
+//                                     <select className="form-control" id="category_field" value={category} onChange={(e) => setCategory(e.target.value)}>
+//                                         {categories.map(category => (
+//                                             <option key={category} value={category} >{category}</option>
+//                                         ))}
+
+//                                     </select>
+//                                 </div>
+//                                 <div className="form-group">
+//                                     <label htmlFor="stock_field">Stock</label>
+//                                     <input
 //                                         type="number"
 //                                         id="stock_field"
 //                                         className="form-control"
 //                                         value={stock}
-//                                         onChange={(e)=>setStock(e.target.value)}
-//                                         />
-//                                     </div>
+//                                         onChange={(e) => setStock(e.target.value)}
+//                                     />
+//                                 </div>
 
-//                                     <div className="form-group">
-//                                         <label htmlFor="seller_field">Seller Name</label>
-//                                         <input
+//                                 <div className="form-group">
+//                                     <label htmlFor="seller_field">Seller Name</label>
+//                                     <input
 //                                         type="text"
 //                                         id="seller_field"
 //                                         className="form-control"
 //                                         value={seller}
-//                                         onChange={(e)=>setSeller(e.target.value)}
+//                                         onChange={(e) => setSeller(e.target.value)}
+//                                     />
+//                                 </div>
+
+//                                 <div className='form-group'>
+//                                     <label>Images</label>
+
+//                                     <div className='custom-file'>
+//                                         <input
+//                                             type='file'
+//                                             name='product_images'
+//                                             className='custom-file-input'
+//                                             id='customFile'
+//                                             onChange={onChange}
+//                                             multiple
 //                                         />
-//                                     </div>
-                                    
-//                                     <div className='form-group'>
-//                                         <label>Images</label>
-                                        
-//                                             <div className='custom-file'>
-//                                                 <input
-//                                                     type='file'
-//                                                     name='product_images'
-//                                                     className='custom-file-input'
-//                                                     id='customFile'
-//                                                     onChange={onChange}
-//                                                     multiple
-//                                                 />
-//                                                 <label className='custom-file-label' htmlFor='customFile'>
-//                                                     Choose Images
-//                                                 </label>
-//                                             </div>
-
-//                                             {imagesPreview.map(img=>(
-//                                                 <img className='mt-3 mr-2' src={img} key={img} alt="Images Preview" width="55" height="52" />
-//                                             ))}
+//                                         <label className='custom-file-label' htmlFor='customFile'>
+//                                             Choose Images
+//                                      </label>
 //                                     </div>
 
-                        
-//                                     <button
+//                                     {imagesPreview.map(img => (
+//                                         <img src={img} key={img} alt="Images Preview" className="mt-3 mr-2" width="55" height="52" />
+//                                     ))}
+
+//                                 </div>
+
+
+//                                 <button
 //                                     id="login_button"
 //                                     type="submit"
 //                                     className="btn btn-block py-3"
-//                                     disabled={loading?true:false}
-//                                     >
+//                                     disabled={loading ? true : false}
+//                                 >
 //                                     CREATE
-//                                     </button>
+//                                 </button>
 
-//                                 </form>
-//                             </div>
-//                         </Fragment>
+//                             </form>
+//                         </div>
+//                     </Fragment>
 //                 </div>
 //             </div>
+
 //         </Fragment>
 //     )
 // }
 
-// export default NewProduct;
+// export default NewProduct
 
 
-import React, { Fragment, useState, useEffect } from 'react'
+
+import React, { Fragment, useEffect, useState } from 'react'
 
 import MetaData from '../layout/MetaData'
 import Sidebar from './Sidebar'
 
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { newProduct, clearErrors } from '../../actions/productActions'
-import { NEW_PRODUCT_RESET } from '../../constants/productConstants'
+import {newProduct, clearErrors} from '../../actions/productActions'
 
-const NewProduct = ({ history }) => {
+import { NEW_PRODUCT_RESET  } from '../../constants/productConstants'
+const NewProduct = ({history}) =>{
 
     const [name, setName] = useState('');
     const [price, setPrice] = useState(0);
@@ -227,16 +239,17 @@ const NewProduct = ({ history }) => {
     const [stock, setStock] = useState(0);
     const [seller, setSeller] = useState('');
     const [images, setImages] = useState([]);
-    const [imagesPreview, setImagesPreview] = useState([])
+    const [imagesPreview, setImagesPreview] = useState([]);
+
 
     const categories = [
         'Electronics',
         'Cameras',
-        'Laptops',
+        'Laptop',
         'Accessories',
         'Headphones',
         'Food',
-        "Books",
+        'Books',
         'Clothes/Shoes',
         'Beauty/Health',
         'Sports',
@@ -247,7 +260,7 @@ const NewProduct = ({ history }) => {
     const alert = useAlert();
     const dispatch = useDispatch();
 
-    const { loading, error, success } = useSelector(state => state.newProduct);
+    const { loading, error,success } = useSelector(state => state.newProduct);
 
     useEffect(() => {
 
@@ -256,167 +269,162 @@ const NewProduct = ({ history }) => {
             dispatch(clearErrors())
         }
 
-        if (success) {
+        if(success){
             history.push('/admin/products');
-            alert.success('Product created successfully');
-            dispatch({ type: NEW_PRODUCT_RESET })
+            alert.success('Product created sucessfully');
+            dispatch({ type:NEW_PRODUCT_RESET })
         }
-
     }, [dispatch, alert, error, success, history])
 
-    const submitHandler = (e) => {
+    const submitHandler = (e)=>{
         e.preventDefault();
 
         const formData = new FormData();
-        formData.set('name', name);
-        formData.set('price', price);
-        formData.set('description', description);
-        formData.set('category', category);
-        formData.set('stock', stock);
-        formData.set('seller', seller);
+        formData.set('name',name);
+        formData.set('price',price);
+        formData.set('description',description);
+        formData.set('category',category);
+        formData.set('stock',stock);
+        formData.set('seller',seller);
 
         images.forEach(image => {
-            formData.append('images', image)
+            formData.append('images',image);
         })
 
-        dispatch(newProduct(formData))
+        dispatch(newProduct(formData));
     }
 
-    const onChange = e => {
+    const onChange = e =>{
 
-        const files = Array.from(e.target.files)
+            const files = Array.from(e.target.files)
+            setImagesPreview([]);
+            setImages([])
 
-        setImagesPreview([]);
-        setImages([])
-
-        files.forEach(file => {
-            const reader = new FileReader();
-
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    setImagesPreview(oldArray => [...oldArray, reader.result])
-                    setImages(oldArray => [...oldArray, reader.result])
+            files.forEach (file => {
+                const reader = new FileReader();
+                reader.onload = () =>{
+                    if(reader.readyState === 2){
+                        setImagesPreview(oldArray => [...oldArray, reader.result]);
+                        setImages(oldArray => [...oldArray, reader.result]);
+                    }
                 }
-            }
-
-            reader.readAsDataURL(file)
-        })
+                reader.readAsDataURL(file) ;
+            })
     }
 
-
-    return (
+    return(
         <Fragment>
-            <MetaData title={'New Product'} />
-            <div className="row">
-                <div className="col-12 col-md-2">
-                    <Sidebar />
-                </div>
+            <MetaData title={'New Products'} />
 
-                <div className="col-12 col-md-10">
-                    <Fragment>
-                        <div className="wrapper my-5">
-                            <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
-                                <h1 className="mb-4">New Product</h1>
+            <div className='row'>
+                <div className='col-12 col-md-2'>
+                    <Sidebar/>
+                 </div>
 
-                                <div className="form-group">
+                    <div className='col-12 col-md-10'>
+                        <Fragment>
+                        <div className="wrapper my-5"> 
+                                <form className="shadow-lg" encType='multipart/form-data' onSubmit={submitHandler}>
+                                    <h1 className="mb-4">New Product</h1>
+
+                                    <div className="form-group">
                                     <label htmlFor="name_field">Name</label>
                                     <input
                                         type="text"
                                         id="name_field"
                                         className="form-control"
                                         value={name}
-                                        onChange={(e) => setName(e.target.value)}
+                                        onChange={(e)=>setName(e.target.value)}
                                     />
-                                </div>
+                                    </div>
 
-                                <div className="form-group">
-                                    <label htmlFor="price_field">Price</label>
-                                    <input
+                                    <div className="form-group">
+                                        <label htmlFor="price_field">Price</label>
+                                        <input
                                         type="text"
                                         id="price_field"
                                         className="form-control"
                                         value={price}
-                                        onChange={(e) => setPrice(e.target.value)}
-                                    />
-                                </div>
+                                        onChange={(e)=>setPrice(e.target.value)}
+                                        />
+                                    </div>
 
-                                <div className="form-group">
-                                    <label htmlFor="description_field">Description</label>
-                                    <textarea className="form-control" id="description_field" rows="8" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-                                </div>
+                                    <div className="form-group">
+                                        <label htmlFor="description_field">Description</label>
+                                        <textarea className="form-control" id="description_field" rows="8" value={description} onChange={(e)=>setDescription(e.target.value)} ></textarea>
+                                    </div>
 
-                                <div className="form-group">
-                                    <label htmlFor="category_field">Category</label>
-                                    <select className="form-control" id="category_field" value={category} onChange={(e) => setCategory(e.target.value)}>
-                                        {categories.map(category => (
-                                            <option key={category} value={category} >{category}</option>
-                                        ))}
-
-                                    </select>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="stock_field">Stock</label>
-                                    <input
+                                    <div className="form-group">
+                                        <label htmlFor="category_field">Category</label>
+                                        <select className="form-control" id="category_field" value={category} onChange={(e)=>setCategory(e.target.value)}>
+                                            {categories.map(category=>(
+                                                <option key={category} value={category}>{category}</option>
+                                            ))}
+                                            
+                                            
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="stock_field">Stock</label>
+                                        <input
                                         type="number"
                                         id="stock_field"
                                         className="form-control"
                                         value={stock}
-                                        onChange={(e) => setStock(e.target.value)}
-                                    />
-                                </div>
+                                        onChange={(e)=>setStock(e.target.value)}
+                                        />
+                                    </div>
 
-                                <div className="form-group">
-                                    <label htmlFor="seller_field">Seller Name</label>
-                                    <input
+                                    <div className="form-group">
+                                        <label htmlFor="seller_field">Seller Name</label>
+                                        <input
                                         type="text"
                                         id="seller_field"
                                         className="form-control"
                                         value={seller}
-                                        onChange={(e) => setSeller(e.target.value)}
-                                    />
-                                </div>
-
-                                <div className='form-group'>
-                                    <label>Images</label>
-
-                                    <div className='custom-file'>
-                                        <input
-                                            type='file'
-                                            name='product_images'
-                                            className='custom-file-input'
-                                            id='customFile'
-                                            onChange={onChange}
-                                            multiple
+                                        onChange={(e)=>setSeller(e.target.value)}
                                         />
-                                        <label className='custom-file-label' htmlFor='customFile'>
-                                            Choose Images
-                                     </label>
+                                    </div>
+                                    
+                                    <div className='form-group'>
+                                        <label>Images</label>
+                                        
+                                            <div className='custom-file'>
+                                                <input
+                                                    type='file'
+                                                    name='product_images'
+                                                    className='custom-file-input'
+                                                    id='customFile'
+                                                    onChange={onChange}
+                                                    multiple
+                                                />
+                                                <label className='custom-file-label' htmlFor='customFile'>
+                                                    Choose Images
+                                                </label>
+                                            </div>
+
+                                            {imagesPreview.map(img=>(
+                                                <img className='mt-3 mr-2' src={img} key={img} alt="Images Preview" width="55" height="52" />
+                                            ))}
                                     </div>
 
-                                    {imagesPreview.map(img => (
-                                        <img src={img} key={img} alt="Images Preview" className="mt-3 mr-2" width="55" height="52" />
-                                    ))}
-
-                                </div>
-
-
-                                <button
+                        
+                                    <button
                                     id="login_button"
                                     type="submit"
                                     className="btn btn-block py-3"
-                                    disabled={loading ? true : false}
-                                >
+                                    disabled={loading?true:false}
+                                    >
                                     CREATE
-                                </button>
+                                    </button>
 
-                            </form>
-                        </div>
-                    </Fragment>
+                                </form>
+                            </div>
+                        </Fragment>
                 </div>
             </div>
-
         </Fragment>
     )
 }
 
-export default NewProduct
+export default NewProduct;
